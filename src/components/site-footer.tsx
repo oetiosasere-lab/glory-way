@@ -28,6 +28,7 @@ export function SiteFooter() {
               { to: "/drinks", label: "Drinks available" },
               { to: "/address", label: "Address" },
               { to: "/contact", label: "Contact" },
+              { to: "/admin", label: "Seller Portal" },
             ].map((l) => (
               <li key={l.to}>
                 <Link to={l.to} className="text-secondary-foreground/80 hover:text-primary">

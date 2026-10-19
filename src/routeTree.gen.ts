@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AddressRouteImport } from './routes/address'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DrinksRouteImport } from './routes/drinks'
 import { Route as McpRouteImport } from './routes/mcp'
@@ -34,6 +35,11 @@ const AboutRoute = AboutRouteImport.update({
 const AddressRoute = AddressRouteImport.update({
   id: '/address',
   path: '/address',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -84,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/address': typeof AddressRoute
+  '/admin': typeof AdminRoute
   '/contact': typeof ContactRoute
   '/drinks': typeof DrinksRoute
   '/mcp': typeof McpRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/address': typeof AddressRoute
+  '/admin': typeof AdminRoute
   '/contact': typeof ContactRoute
   '/drinks': typeof DrinksRoute
   '/mcp': typeof McpRoute
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/address': typeof AddressRoute
+  '/admin': typeof AdminRoute
   '/contact': typeof ContactRoute
   '/drinks': typeof DrinksRoute
   '/mcp': typeof McpRoute
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/address'
+    | '/admin'
     | '/contact'
     | '/drinks'
     | '/mcp'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/address'
+    | '/admin'
     | '/contact'
     | '/drinks'
     | '/mcp'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/address'
+    | '/admin'
     | '/contact'
     | '/drinks'
     | '/mcp'
@@ -166,6 +178,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AddressRoute: typeof AddressRoute
+  AdminRoute: typeof AdminRoute
   ContactRoute: typeof ContactRoute
   DrinksRoute: typeof DrinksRoute
   McpRoute: typeof McpRoute
@@ -197,6 +210,13 @@ declare module '@tanstack/react-router' {
       path: '/address'
       fullPath: '/address'
       preLoaderRoute: typeof AddressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -262,6 +282,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AddressRoute: AddressRoute,
+  AdminRoute: AdminRoute,
   ContactRoute: ContactRoute,
   DrinksRoute: DrinksRoute,
   McpRoute: McpRoute,

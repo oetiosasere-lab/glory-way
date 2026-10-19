@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { drinks } from "@/lib/drinks";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Please enter your full name").max(80),
@@ -33,7 +34,52 @@ export function OrderForm() {
   });
 
   async function onSubmit(values: FormValues) {
-    await new Promise((r) => setTimeout(r, 700));
+    const drinkObj = drinks.find((d) => d.slug === values.drink);
+    const drinkName = drinkObj?.name || values.drink;
+
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from("orders").insert([
+          {
+            customer_name: values.name,
+            phone: values.phone,
+            email: values.email,
+            drink_slug: values.drink,
+            drink_name: drinkName,
+            quantity: values.quantity,
+            message: values.message,
+            status: "pending",
+          },
+        ]);
+      } catch (err) {
+        console.error("Supabase insert error:", err);
+      }
+    } else {
+      // Local demo fallback for testing before adding live key
+      try {
+        const stored = JSON.parse(
+          localStorage.getItem("glory_way_orders") || "[]",
+        );
+        stored.unshift({
+          id: "local-" + Date.now(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          customer_name: values.name,
+          phone: values.phone,
+          email: values.email,
+          drink_slug: values.drink,
+          drink_name: drinkName,
+          quantity: values.quantity,
+          message: values.message,
+          status: "pending",
+        });
+        localStorage.setItem("glory_way_orders", JSON.stringify(stored));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    await new Promise((r) => setTimeout(r, 600));
     setSubmitted(values);
   }
 

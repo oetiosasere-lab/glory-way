@@ -7,6 +7,10 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { mcpPlugin } from "@lovable.dev/mcp-js/stacks/tanstack/vite";
 
+if (process.env.VERCEL) {
+  process.env.NITRO_PRESET = "vercel";
+}
+
 export default defineConfig({
   plugins: [mcpPlugin()],
   tanstackStart: {

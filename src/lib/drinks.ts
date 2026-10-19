@@ -12,7 +12,7 @@ const photo = (slug: string) => {
   const match = Object.entries(photos).find(([path]) =>
     path.includes(`/${slug}.`),
   );
-  return match ? match[1] : maltinaFallback;
+  return match ? match[1] : undefined;
 };
 
 
@@ -50,6 +50,7 @@ export const drinks: Drink[] = [
   make("Goldberg", "Lager", "Proudly Nigerian lager. Bottles and cans."),
   make("Life", "Lager", "Refreshing lager. Bottles and cans."),
   make("Hero", "Lager", "Popular lager. Bottles and cans."),
+  make("Trophy", "Lager", "Crisp, refreshing lager. Bottles and cans."),
   make("Guinness", "Stout", "Rich, dark stout. Bottles and cans."),
   make("Legend", "Stout", "Bold, smooth extra stout. Bottles and cans."),
   make("Coca-Cola", "Soft Drink", "Classic cola. Bottles and cans."),
@@ -74,7 +75,6 @@ export const drinks: Drink[] = [
   make("Climax", "Energy", "Energy drink. Bottles and cans."),
   make("Power Horse", "Energy", "Energy drink. Cans."),
   make("Red Bull", "Energy", "Energy drink. Cans."),
-  make("Trophy", "Energy", "Energy drink. Bottles and cans."),
 ];
 
 export const drinkOptions = drinks.map((d) => ({ value: d.slug, label: d.name }));

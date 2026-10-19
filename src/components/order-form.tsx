@@ -14,6 +14,7 @@ const schema = z.object({
     .max(20)
     .regex(/^[+()\d\s-]+$/, "Only digits and + ( ) - are allowed"),
   drink: z.string().min(1, "Choose a drink"),
+  quantity: z.string().trim().min(1, "Please enter quantity (e.g. 2 crates)").max(50),
   message: z.string().trim().min(5, "Tell us a bit more").max(600),
 });
 
@@ -26,7 +27,10 @@ export function OrderForm() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: { drink: "" } });
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: { drink: "", quantity: "1 crate" },
+  });
 
   async function onSubmit(values: FormValues) {
     await new Promise((r) => setTimeout(r, 700));
@@ -42,9 +46,11 @@ export function OrderForm() {
           </h3>
         </div>
         <p className="mt-4 text-secondary-foreground/85">
-          We've received your enquiry for <strong className="text-primary">{
-            drinks.find((d) => d.slug === submitted.drink)?.name ?? submitted.drink
-          }</strong>. A Glory Way Limited team member will call you on{" "}
+          We've received your enquiry for{" "}
+          <strong className="text-primary">
+            {submitted.quantity} of{" "}
+            {drinks.find((d) => d.slug === submitted.drink)?.name ?? submitted.drink}
+          </strong>. A Glory Way Limited team member will call you on{" "}
           <strong>{submitted.phone}</strong> within a few minutes to confirm your
           order and delivery window.
         </p>
@@ -102,18 +108,29 @@ export function OrderForm() {
         />
       </Field>
 
-      <Field label="Drink available" error={errors.drink?.message}>
-        <select {...register("drink")} className={inputCls} defaultValue="">
-          <option value="" disabled>
-            Select a drink…
-          </option>
-          {drinks.map((d) => (
-            <option key={d.slug} value={d.slug}>
-              {d.name} — {d.size}
+      <div className="grid gap-5 sm:grid-cols-2">
+        <Field label="Select a drink" error={errors.drink?.message}>
+          <select {...register("drink")} className={inputCls} defaultValue="">
+            <option value="" disabled>
+              Select a drink…
             </option>
-          ))}
-        </select>
-      </Field>
+            {drinks.map((d) => (
+              <option key={d.slug} value={d.slug}>
+                {d.name} — {d.size}
+              </option>
+            ))}
+          </select>
+        </Field>
+
+        <Field label="Quantity" error={errors.quantity?.message}>
+          <input
+            {...register("quantity")}
+            type="text"
+            placeholder="e.g. 5 crates"
+            className={inputCls}
+          />
+        </Field>
+      </div>
 
       <Field label="Message" error={errors.message?.message}>
         <textarea

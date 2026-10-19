@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Section } from "@/components/section";
 import warehouseImg from "@/assets/warehouse.jpg";
-import ownerImg from "@/assets/owner.jpg.asset.json";
+import ownerImg from "@/assets/owner.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -78,7 +78,7 @@ function AboutPage() {
             </p>
           </div>
           <img
-            src={ownerImg.url}
+            src={ownerImg}
             alt="Portrait of the owner of Glory Way Limited"
             loading="lazy"
             width={1200}

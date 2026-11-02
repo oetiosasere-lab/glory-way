@@ -32,8 +32,7 @@ const categories: { id: string; label: string; cat?: DrinkCategory }[] = [
   { id: "stout", label: "Stouts", cat: "Stout" },
   { id: "malt", label: "Malt Drinks", cat: "Malt" },
   { id: "soft", label: "Soft Drinks", cat: "Soft Drink" },
-  { id: "rtd", label: "Ready-to-Drink & Cider", cat: "RTD & Cider" },
-  { id: "bitters", label: "Bitters & Herbal", cat: "Bitters" },
+  { id: "bitters", label: "Bitters (Action Bitters)", cat: "Bitters" },
   { id: "spirits", label: "Spirits & Wine", cat: "Spirits & Wine" },
 ];
 

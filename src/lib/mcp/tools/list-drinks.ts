@@ -15,7 +15,6 @@ export default defineTool({
         "Stout",
         "Malt",
         "Soft Drink",
-        "RTD & Cider",
         "Bitters",
         "Spirits & Wine",
       ])

@@ -22,7 +22,6 @@ export type DrinkCategory =
   | "Malt"
   | "Soft Drink"
   | "Bitters"
-  | "RTD & Cider"
   | "Spirits & Wine";
 
 export type PackageType = "Bottle" | "Can";
@@ -58,13 +57,13 @@ const make = (
 });
 
 export const drinks: Drink[] = [
-  // --- ENERGY DRINKS ---
+  // --- ENERGY DRINKS (All Cans, sold by the pack/carton) ---
   make("Red Bull", "red-bull", "Energy", ["Can"], "Red Bull GmbH", "25cl / 33cl Cans", "World-renowned energy drink that vitalizes body and mind. Sold by the pack or carton."),
   make("Monster Energy", "monster", "Energy", ["Can"], "Monster Beverage", "44cl / 50cl Cans", "Tear into a can of the meanest energy drink on the planet. Sold by the pack."),
-  make("Fearless", "fearless", "Energy", ["Bottle", "Can"], "Rite Foods", "50cl Cans & PET Bottles", "Quick burst of energy with bold flavours (Classic & Red Berry). Available in bottles and cans."),
+  make("Fearless", "fearless", "Energy", ["Can"], "Rite Foods", "50cl Cans", "Quick burst of energy with bold flavours (Classic & Red Berry). Sold in packs."),
   make("Power Horse", "power-horse", "Energy", ["Can"], "Power Horse", "25cl / 33cl Cans", "Premium European energy drink formula for stamina and vitality. Sold in packs."),
-  make("Predator", "predator", "Energy", ["Bottle", "Can"], "Monster Energy / Coca-Cola", "40cl PET & 33cl Cans", "Fierce refreshment and affordable energy for high endurance. Bottles and cans."),
-  make("Climax", "climax", "Energy", ["Bottle", "Can"], "Nigerian Breweries", "50cl PET & 33cl Cans", "Herbal-infused energy drink by Nigerian Breweries. Distinctive invigorating taste."),
+  make("Predator", "predator", "Energy", ["Can"], "Monster Energy / Coca-Cola", "33cl Cans", "Fierce refreshment and affordable energy for high endurance. Sold in packs."),
+  make("Climax", "climax", "Energy", ["Can"], "Nigerian Breweries", "33cl Cans", "Herbal-infused energy drink by Nigerian Breweries. Distinctive invigorating taste."),
   make("Bullet", "bullet", "Energy", ["Can"], "Bullet", "25cl / 33cl Cans", "Powerful energy formulation popular across clubs and events. Available in cans."),
   make("Rockstar", "rockstar", "Energy", ["Can"], "PepsiCo", "33cl / 44cl Cans", "Designed for those who lead active lifestyles with B-vitamins and taurine."),
 
@@ -93,18 +92,8 @@ export const drinks: Drink[] = [
   make("Hi-Malt", "hi-malt", "Malt", ["Bottle", "Can"], "Consolidated Breweries", "33cl Bottles & 33cl Cans", "Classic nourishing malt drink with balanced natural sweetness."),
   make("Grand Malt", "grand-malt", "Malt", ["Bottle", "Can"], "Nigerian Breweries", "33cl Bottles & 33cl Cans", "Rich malt refreshment brewed from the finest natural barley."),
 
-  // --- READY TO DRINK & CIDERS ---
-  make("Smirnoff Ice", "smirnoff-ice", "RTD & Cider", ["Bottle", "Can"], "Guinness Nigeria", "30cl Bottles & 33cl Cans", "Crisp, citrus blend infused with Smirnoff No. 21 vodka. Refreshingly zesty."),
-  make("Orijin Ready-To-Drink", "orijin", "RTD & Cider", ["Bottle", "Can"], "Guinness Nigeria", "60cl Bottles & 33cl Cans", "Alcoholic blend with African herbs and sweet tropical fruit flavours."),
-  make("Desperados", "desperados", "RTD & Cider", ["Bottle", "Can"], "Nigerian Breweries", "33cl Bottles & 33cl Cans", "Tequila-flavoured beer with a wild, refreshing edge."),
-  make("Savanna Cider", "savanna", "RTD & Cider", ["Bottle", "Can"], "Distell", "33cl Bottles & 33cl Cans", "Crisp dry cider made from crushed apples. Refreshingly dry finish."),
-  make("Hunters Gold", "hunters-gold", "RTD & Cider", ["Bottle", "Can"], "Distell", "33cl Bottles & 33cl Cans", "Crisp, sweet, golden cider bursting with fresh apple fruitiness."),
-
-  // --- BITTERS & HERBAL ---
-  make("Action Bitters", "action-bitters", "Bitters", ["Bottle"], "Intercontinental Distillers", "37.5cl & 75cl Bottles", "Popular herbal alcoholic drink crafted from traditional botanical extracts."),
-  make("Alomo Bitters", "alomo-bitters", "Bitters", ["Bottle"], "Kasapreko", "20cl, 37.5cl & 75cl Bottles", "Authentic Ghanaian botanical herbal bitters popular across Nigeria."),
-  make("1960 Roots", "1960-roots", "Bitters", ["Bottle"], "Grand Oak", "37.5cl & 75cl Bottles", "Heritage Nigerian herbal alcoholic bitters with deep aromatic spice."),
-  make("Odogwu Bitters", "odogwu-bitters", "Bitters", ["Bottle"], "Odogwu", "33cl Bottles & Cans", "Herbal alcoholic blend with ginger, honey, and natural ginseng."),
+  // --- BITTERS & HERBAL (Only Action Bitters) ---
+  make("Action Bitters", "action-bitters", "Bitters", ["Bottle"], "Intercontinental Distillers", "37.5cl & 75cl Bottles", "Popular heritage herbal alcoholic drink crafted from traditional botanical extracts."),
 
   // --- SPIRITS, WINES & LIQUEURS ---
   make("Gordon's Dry Gin", "gordons-gin", "Spirits & Wine", ["Bottle"], "Guinness / Diageo", "75cl Bottles", "Classic London dry gin infused with handpicked wild juniper berries."),
@@ -119,20 +108,21 @@ export const drinks: Drink[] = [
   make("Carlo Rossi Sweet Red", "carlo-rossi", "Spirits & Wine", ["Bottle"], "E. & J. Gallo", "75cl Bottles", "Rich, sweet California red wine packed with red berry flavours."),
   make("Moët & Chandon Brut", "moet-chandon", "Spirits & Wine", ["Bottle"], "Moët & Chandon", "75cl Bottles", "Prestigious French champagne with vibrant apple, citrus and brioche."),
 
-  // --- SOFT DRINKS & JUICES ---
-  make("Coca-Cola", "coca-cola", "Soft Drink", ["Bottle", "Can"], "NBC / Coca-Cola", "35cl/50cl Bottles & 33cl Cans", "The timeless classic refreshing cola. Available in glass bottles and cans."),
-  make("Fanta Orange", "fanta", "Soft Drink", ["Bottle", "Can"], "NBC / Coca-Cola", "35cl/50cl Bottles & 33cl Cans", "Vibrant, bubbly orange fruit taste that uplifts every moment."),
-  make("Sprite", "sprite", "Soft Drink", ["Bottle", "Can"], "NBC / Coca-Cola", "35cl/50cl Bottles & 33cl Cans", "Crisp, clean lemon-lime refreshment with 100% natural flavours."),
-  make("Pepsi", "pepsi", "Soft Drink", ["Bottle", "Can"], "Seven-Up Bottling Co.", "50cl Bottles & 33cl Cans", "Bold, refreshing cola with sweet citrus undertones."),
-  make("7UP", "7up", "Soft Drink", ["Bottle", "Can"], "Seven-Up Bottling Co.", "50cl Bottles & 33cl Cans", "Crisp lemon and lime thirst-quencher. 100% naturally refreshing."),
-  make("Mirinda", "mirinda", "Soft Drink", ["Bottle", "Can"], "Seven-Up Bottling Co.", "50cl Bottles & 33cl Cans", "Intensely fruity orange sparkling soft drink."),
-  make("Fayrouz", "fayrouz", "Soft Drink", ["Bottle", "Can"], "Nigerian Breweries", "33cl Bottles & 33cl Cans", "Natural malted sparkling soft drink with pineapple and citrus."),
-  make("Schweppes", "schweppes", "Soft Drink", ["Bottle", "Can"], "NBC / Coca-Cola", "33cl Cans & 35cl Bottles", "Sophisticated sparkling bitter lemon, tonic, soda, and Chapman."),
-  make("Bigi Drinks", "bigi", "Soft Drink", ["Bottle"], "Rite Foods", "35cl / 50cl PET Bottles", "Assorted Nigerian soft drinks (Cola, Orange, Tropical, Apple)."),
-  make("La Casera Apple", "la-casera", "Soft Drink", ["Bottle"], "La Casera Co.", "50cl PET Bottles", "Nigeria's pioneer carbonated apple drink with crisp real apple taste."),
-  make("Chivita Juice", "chivita", "Soft Drink", ["Bottle", "Can"], "CHI Limited", "1L Packs & 33cl Cans", "100% pure real fruit juice blends (Orange, Pineapple, Apple, Mango)."),
-  make("Hollandia Yoghurt", "hollandia", "Soft Drink", ["Bottle"], "CHI Limited", "31.5cl & 1L Packs", "Rich and creamy drinking yoghurt in strawberry and plain flavours."),
-  make("Ribena", "ribena", "Soft Drink", ["Bottle"], "Suntory", "50cl PET Bottles & 1L", "Rich in vitamin C, made with 100% British blackcurrants."),
+  // --- SOFT DRINKS (All in Cans, plus dedicated Bottle Coke & Bottle Pepsi) ---
+  make("Coca-Cola (Can)", "coca-cola", "Soft Drink", ["Can"], "NBC / Coca-Cola", "33cl Cans", "The classic refreshing cola in convenient chilled cans. Sold by the pack or carton."),
+  make("Bottle Coke", "bottle-coke", "Soft Drink", ["Bottle"], "NBC / Coca-Cola", "35cl / 50cl Glass & PET Bottles", "Classic Coca-Cola in traditional bottles. Sold by the crate."),
+  make("Pepsi (Can)", "pepsi", "Soft Drink", ["Can"], "Seven-Up Bottling Co.", "33cl Cans", "Bold, refreshing cola in chilled 33cl cans. Sold by the pack or carton."),
+  make("Bottle Pepsi", "bottle-pepsi", "Soft Drink", ["Bottle"], "Seven-Up Bottling Co.", "50cl / 60cl Bottles", "Original refreshing Pepsi cola in glass and PET bottles. Sold by the crate."),
+  make("Fanta Orange", "fanta", "Soft Drink", ["Can"], "NBC / Coca-Cola", "33cl Cans", "Vibrant, bubbly orange fruit taste in chilled cans. Sold in packs."),
+  make("Sprite", "sprite", "Soft Drink", ["Can"], "NBC / Coca-Cola", "33cl Cans", "Crisp, clean lemon-lime refreshment in chilled cans. Sold in packs."),
+  make("7UP", "7up", "Soft Drink", ["Can"], "Seven-Up Bottling Co.", "33cl Cans", "Crisp lemon and lime thirst-quencher in convenient cans. Sold in packs."),
+  make("Mirinda", "mirinda", "Soft Drink", ["Can"], "Seven-Up Bottling Co.", "33cl Cans", "Intensely fruity orange sparkling soft drink in chilled cans."),
+  make("Fayrouz", "fayrouz", "Soft Drink", ["Can"], "Nigerian Breweries", "33cl Cans", "Natural malted sparkling soft drink with pineapple and citrus in cans."),
+  make("Schweppes", "schweppes", "Soft Drink", ["Can"], "NBC / Coca-Cola", "33cl Cans", "Sparkling bitter lemon, tonic, soda, and Chapman in cans."),
+  make("La Casera Apple", "la-casera", "Soft Drink", ["Can"], "La Casera Co.", "33cl / 50cl Cans", "Crisp, sparkling natural apple refreshment in chilled cans."),
+  make("Chivita Juice", "chivita", "Soft Drink", ["Can"], "CHI Limited", "33cl Cans / Packs", "100% pure real fruit juice blends in convenient packs and cans."),
+  make("Hollandia Yoghurt", "hollandia", "Soft Drink", ["Can"], "CHI Limited", "Packs & Cans", "Rich and creamy drinking yoghurt in strawberry and plain flavours."),
+  make("Ribena", "ribena", "Soft Drink", ["Can"], "Suntory", "Packs & Cans", "Rich in vitamin C, made with 100% British blackcurrants."),
 ];
 
 export const drinkCategories: DrinkCategory[] = [
@@ -141,12 +131,11 @@ export const drinkCategories: DrinkCategory[] = [
   "Stout",
   "Malt",
   "Soft Drink",
-  "RTD & Cider",
   "Bitters",
   "Spirits & Wine",
 ];
 
 export const drinkOptions = drinks.map((d) => ({
   value: d.slug,
-  label: `${d.name} (${d.category})`,
+  label: `${d.name} (${d.packageTypes.join("/")})`,
 }));

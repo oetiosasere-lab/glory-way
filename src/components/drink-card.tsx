@@ -7,7 +7,7 @@ export function DrinkCard({ drink }: { drink: Drink }) {
         {drink.image ? (
           <img
             src={drink.image}
-            alt={`${drink.name} bottle`}
+            alt={drink.name}
             loading="lazy"
             width={900}
             height={1100}
@@ -18,20 +18,33 @@ export function DrinkCard({ drink }: { drink: Drink }) {
             Image unavailable
           </div>
         )}
-        <span className="absolute left-3 top-3 rounded-full bg-background/90 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-foreground">
-          {drink.category}
-        </span>
+        <div className="absolute left-3 top-3 flex items-center gap-1.5">
+          <span className="rounded-full bg-background/90 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-foreground shadow-sm">
+            {drink.category}
+          </span>
+        </div>
       </div>
       <div className="flex flex-1 flex-col gap-2 p-5">
         <div className="flex items-baseline justify-between gap-3">
           <h3 className="font-display text-lg font-semibold">{drink.name}</h3>
           <span className="text-xs font-semibold uppercase tracking-wider text-primary">
-            By the crate
+            By the crate / pack
           </span>
         </div>
-        <p className="text-xs uppercase tracking-wider text-muted-foreground">
-          {drink.size} · {drink.brewer}
-        </p>
+        <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+          <span className="font-medium">{drink.size}</span>
+          <span>•</span>
+          <div className="flex items-center gap-1">
+            {drink.packageTypes.map((pkg) => (
+              <span
+                key={pkg}
+                className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary"
+              >
+                {pkg}
+              </span>
+            ))}
+          </div>
+        </div>
         <p className="mt-1 text-sm text-foreground/80">{drink.note}</p>
       </div>
     </article>

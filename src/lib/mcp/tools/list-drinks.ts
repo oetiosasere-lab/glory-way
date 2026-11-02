@@ -9,7 +9,16 @@ export default defineTool({
     "List the Nigerian Breweries drinks Glory Way Limited stocks, optionally filtered by category. All drinks are sold by the crate.",
   inputSchema: {
     category: z
-      .enum(["Lager", "Stout", "Malt", "Soft Drink", "Energy"])
+      .enum([
+        "Energy",
+        "Lager",
+        "Stout",
+        "Malt",
+        "Soft Drink",
+        "RTD & Cider",
+        "Bitters",
+        "Spirits & Wine",
+      ])
       .optional()
       .describe("Optional category filter."),
   },

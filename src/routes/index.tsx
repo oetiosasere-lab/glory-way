@@ -139,7 +139,12 @@ function Benefits() {
 }
 
 function Featured() {
-  const featured = drinks.slice(0, 4);
+  const featured = [
+    drinks.find((d) => d.slug === "star"),
+    drinks.find((d) => d.slug === "heineken"),
+    drinks.find((d) => d.slug === "red-bull"),
+    drinks.find((d) => d.slug === "guinness"),
+  ].filter(Boolean) as typeof drinks;
   return (
     <Section
       eyebrow="Featured this week"

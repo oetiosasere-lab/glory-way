@@ -17,6 +17,7 @@ import {
   LogOut,
   AlertCircle,
   Filter,
+  MapPin,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
@@ -101,9 +102,11 @@ function AdminPage() {
               phone: "+234 801 234 5678",
               email: "osasere@example.com",
               drink_slug: "star",
-              drink_name: "Star Lager",
+              drink_name: "Star Lager (Bottle)",
+              packaging: "Bottle",
               quantity: "5 crates",
-              message: "Please deliver along Sapele Road NNPC Junction by 3 PM.",
+              delivery_address: "Along Sapele Road NNPC Junction, Ikpoba Okha, Benin City",
+              message: "Please deliver by 3 PM.",
               status: "pending",
             },
             {
@@ -114,8 +117,10 @@ function AdminPage() {
               phone: "+234 802 345 6789",
               email: "efe@example.com",
               drink_slug: "heineken",
-              drink_name: "Heineken",
-              quantity: "10 crates",
+              drink_name: "Heineken (Can)",
+              packaging: "Can",
+              quantity: "10 packs",
+              delivery_address: "14 Airport Road, GRA, Benin City",
               message: "Wedding gathering restock. Call driver on arrival.",
               status: "confirmed",
             },
@@ -127,8 +132,10 @@ function AdminPage() {
               phone: "+234 803 456 7890",
               email: "blessing@example.com",
               drink_slug: "malta-guinness",
-              drink_name: "Malta Guinness",
-              quantity: "3 crates",
+              drink_name: "Malta Guinness (Can)",
+              packaging: "Can",
+              quantity: "3 packs",
+              delivery_address: "22 Mission Road, Ring Road, Benin City",
               message: "Delivered and paid in cash. Excellent service.",
               status: "completed",
               completed_at: new Date(Date.now() - 1000 * 60 * 60 * 20).toISOString(),
@@ -226,6 +233,7 @@ function AdminPage() {
         o.customer_name.toLowerCase().includes(q) ||
         o.phone.toLowerCase().includes(q) ||
         o.drink_name.toLowerCase().includes(q) ||
+        (o.delivery_address && o.delivery_address.toLowerCase().includes(q)) ||
         (o.message && o.message.toLowerCase().includes(q));
       return matchesStatus && matchesSearch;
     });
@@ -510,7 +518,23 @@ function AdminPage() {
                           <span className="text-sm font-semibold text-foreground">
                             {order.drink_name}
                           </span>
+                          {order.packaging && (
+                            <span className="rounded-full border border-primary/30 bg-primary/5 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                              {order.packaging}
+                            </span>
+                          )}
                         </div>
+
+                        {/* Delivery Address */}
+                        {order.delivery_address && (
+                          <div className="flex items-start gap-1.5 rounded-lg border border-border/80 bg-muted/40 p-2.5 text-xs text-foreground">
+                            <MapPin className="h-4 w-4 shrink-0 text-primary mt-0.5" />
+                            <div>
+                              <span className="font-semibold text-foreground/70">Delivery Address: </span>
+                              <span className="font-medium text-foreground">{order.delivery_address}</span>
+                            </div>
+                          </div>
+                        )}
 
                         {/* Contact details */}
                         <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">

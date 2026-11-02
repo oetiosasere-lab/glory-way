@@ -14,12 +14,18 @@ CREATE TABLE IF NOT EXISTS public.orders (
     email TEXT NOT NULL,
     drink_slug TEXT NOT NULL,
     drink_name TEXT NOT NULL,
+    packaging TEXT NOT NULL DEFAULT 'Bottle',
     quantity TEXT NOT NULL DEFAULT '1 crate',
+    delivery_address TEXT,
     message TEXT,
     status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'completed', 'cancelled')),
     notes TEXT,
     completed_at TIMESTAMPTZ
 );
+
+-- If the table was already created earlier, safely add the new columns:
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS packaging TEXT DEFAULT 'Bottle';
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS delivery_address TEXT;
 
 -- 2. Create updated_at trigger function
 CREATE OR REPLACE FUNCTION public.handle_updated_at()

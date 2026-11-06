@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { Section } from "@/components/section";
 import { OrderForm } from "@/components/order-form";
+import { getSiteSettings, defaultSiteSettings, type SiteSettings } from "@/lib/api";
+import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -23,6 +26,12 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const [settings, setSettings] = useState<SiteSettings>(defaultSiteSettings);
+
+  useEffect(() => {
+    getSiteSettings().then(setSettings).catch(console.error);
+  }, []);
+
   return (
     <div>
       <Section
@@ -38,21 +47,25 @@ function ContactPage() {
                 Prefer to talk to a person?
               </h3>
               <ul className="mt-4 space-y-3 text-sm text-foreground/85">
-                <li>
-                  <a href="tel:07051656621" className="hover:text-primary">
-                    0705 165 6621
+                <li className="flex items-center gap-2">
+                  <Phone className="h-4 w-4 text-primary shrink-0" />
+                  <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="hover:text-primary font-medium">
+                    {settings.phone}
                   </a>
                 </li>
-                <li>
-                  <a href="mailto:gloryomosigho@gmail.com" className="hover:text-primary">
-                    gloryomosigho@gmail.com
+                <li className="flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-primary shrink-0" />
+                  <a href={`mailto:${settings.email}`} className="hover:text-primary">
+                    {settings.email}
                   </a>
                 </li>
-                <li>
-                  <span>Imasabor Number 19 Oduware, along Saple Road, NNPC Junction, Ikpoba Okha, Benin City, Edo State, Nigeria</span>
+                <li className="flex items-start gap-2">
+                  <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <span>{settings.address}</span>
                 </li>
-                <li>
-                  <span>Open 11 hours a day, 6 days a week, 365 days a year</span>
+                <li className="flex items-start gap-2">
+                  <Clock className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <span>{settings.operating_hours}</span>
                 </li>
               </ul>
             </div>

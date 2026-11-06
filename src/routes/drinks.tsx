@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Section } from "@/components/section";
 import { DrinkCard } from "@/components/drink-card";
-import { drinks, type DrinkCategory } from "@/lib/drinks";
+import { drinks as defaultDrinks, type Drink, type DrinkCategory, type PackageType } from "@/lib/drinks";
+import { getProducts } from "@/lib/api";
 import { Search } from "lucide-react";
 
 export const Route = createFileRoute("/drinks")({
@@ -12,13 +13,13 @@ export const Route = createFileRoute("/drinks")({
       {
         name: "description",
         content:
-          "Browse energy drinks, beers, stouts, malts, soft drinks, spirits and wines stocked at Glory Way Limited. Delivered in bottles and cans.",
+          "Browse energy drinks, beers, stouts, malts, and soft drinks stocked at Glory Way Limited. Delivered in bottles and cans.",
       },
       { property: "og:title", content: "Drinks Available at Glory Way Limited" },
       {
         property: "og:description",
         content:
-          "Energy drinks, beers, stouts, malts, soft drinks and wines — delivered to your door.",
+          "Energy drinks, beers, stouts, malts, and soft drinks — delivered to your door.",
       },
     ],
   }),
@@ -33,15 +34,37 @@ const categories: { id: string; label: string; cat?: DrinkCategory }[] = [
   { id: "malt", label: "Malt Drinks", cat: "Malt" },
   { id: "soft", label: "Soft Drinks", cat: "Soft Drink" },
   { id: "bitters", label: "Bitters (Action Bitters)", cat: "Bitters" },
-  { id: "spirits", label: "Spirits & Wine", cat: "Spirits & Wine" },
 ];
 
 function DrinksPage() {
   const [selectedCat, setSelectedCat] = useState("all");
   const [query, setQuery] = useState("");
+  const [allDrinksList, setAllDrinksList] = useState<Drink[]>(defaultDrinks);
+
+  useEffect(() => {
+    getProducts()
+      .then((customProds) => {
+        if (customProds && customProds.length > 0) {
+          const formatted: Drink[] = customProds.map((cp) => ({
+            slug: cp.slug,
+            name: cp.name,
+            category: (cp.category as DrinkCategory) || "Soft Drink",
+            packageTypes: (cp.package_types as PackageType[]) || ["Can"],
+            brewer: cp.brewer || "Glory Way Stock",
+            size: cp.size || "Standard",
+            note: cp.note || "",
+            image: cp.image_url || undefined,
+          }));
+
+          const customSlugs = new Set(formatted.map((f) => f.slug));
+          setAllDrinksList([...formatted, ...defaultDrinks.filter((d) => !customSlugs.has(d.slug))]);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   const filtered = useMemo(() => {
-    return drinks.filter((d) => {
+    return allDrinksList.filter((d) => {
       const matchCat =
         selectedCat === "all" ||
         categories.find((c) => c.id === selectedCat)?.cat === d.category;
@@ -54,7 +77,7 @@ function DrinksPage() {
         d.size.toLowerCase().includes(q);
       return matchCat && matchSearch;
     });
-  }, [selectedCat, query]);
+  }, [allDrinksList, selectedCat, query]);
 
   return (
     <div>
@@ -81,8 +104,8 @@ function DrinksPage() {
               const active = selectedCat === c.id;
               const count =
                 c.id === "all"
-                  ? drinks.length
-                  : drinks.filter((d) => d.category === c.cat).length;
+                  ? allDrinksList.length
+                  : allDrinksList.filter((d) => d.category === c.cat).length;
               return (
                 <button
                   key={c.id}

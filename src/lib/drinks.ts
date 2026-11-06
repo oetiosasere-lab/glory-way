@@ -21,8 +21,7 @@ export type DrinkCategory =
   | "Stout"
   | "Malt"
   | "Soft Drink"
-  | "Bitters"
-  | "Spirits & Wine";
+  | "Bitters";
 
 export type PackageType = "Bottle" | "Can";
 
@@ -61,11 +60,11 @@ export const drinks: Drink[] = [
   make("Red Bull", "red-bull", "Energy", ["Can"], "Red Bull GmbH", "25cl / 33cl Cans", "World-renowned energy drink that vitalizes body and mind. Sold by the pack or carton."),
   make("Monster Energy", "monster", "Energy", ["Can"], "Monster Beverage", "44cl / 50cl Cans", "Tear into a can of the meanest energy drink on the planet. Sold by the pack."),
   make("Fearless", "fearless", "Energy", ["Can"], "Rite Foods", "50cl Cans", "Quick burst of energy with bold flavours (Classic & Red Berry). Sold in packs."),
-  make("Power Horse", "power-horse", "Energy", ["Can"], "Power Horse", "25cl / 33cl Cans", "Premium European energy drink formula for stamina and vitality. Sold in packs."),
+
   make("Predator", "predator", "Energy", ["Can"], "Monster Energy / Coca-Cola", "33cl Cans", "Fierce refreshment and affordable energy for high endurance. Sold in packs."),
   make("Climax", "climax", "Energy", ["Can"], "Nigerian Breweries", "33cl Cans", "Herbal-infused energy drink by Nigerian Breweries. Distinctive invigorating taste."),
   make("Bullet", "bullet", "Energy", ["Can"], "Bullet", "25cl / 33cl Cans", "Powerful energy formulation popular across clubs and events. Available in cans."),
-  make("Rockstar", "rockstar", "Energy", ["Can"], "PepsiCo", "33cl / 44cl Cans", "Designed for those who lead active lifestyles with B-vitamins and taurine."),
+
 
   // --- BEERS & LAGERS ---
   make("Star Lager", "star", "Lager", ["Bottle", "Can"], "Nigerian Breweries", "60cl Bottles & 33cl/50cl Cans", "Nigeria's flagship crisp, clean lager since 1949. Premium cold filtered."),
@@ -95,19 +94,6 @@ export const drinks: Drink[] = [
   // --- BITTERS & HERBAL (Only Action Bitters) ---
   make("Action Bitters", "action-bitters", "Bitters", ["Bottle"], "Intercontinental Distillers", "37.5cl & 75cl Bottles", "Popular heritage herbal alcoholic drink crafted from traditional botanical extracts."),
 
-  // --- SPIRITS, WINES & LIQUEURS ---
-  make("Gordon's Dry Gin", "gordons-gin", "Spirits & Wine", ["Bottle"], "Guinness / Diageo", "75cl Bottles", "Classic London dry gin infused with handpicked wild juniper berries."),
-  make("Chelsea Dry Gin", "chelsea-gin", "Spirits & Wine", ["Bottle"], "Intercontinental Distillers", "75cl & 37.5cl Bottles", "Long-standing Nigerian favourite dry gin with aromatic botanicals."),
-  make("Smirnoff Vodka", "smirnoff-vodka", "Spirits & Wine", ["Bottle"], "Guinness / Diageo", "75cl & 37.5cl Bottles", "Triple distilled and ten times filtered for world-renowned purity."),
-  make("Jameson Irish Whiskey", "jameson", "Spirits & Wine", ["Bottle"], "Irish Distillers / Pernod", "70cl / 1L Bottles", "Triple-distilled Irish whiskey renowned for its smooth, balanced character."),
-  make("Johnnie Walker Black Label", "johnnie-walker-black", "Spirits & Wine", ["Bottle"], "Diageo", "70cl / 1L Bottles", "Iconic 12-year-old blended Scotch whisky with rich, smoky depth."),
-  make("Hennessy VS", "hennessy", "Spirits & Wine", ["Bottle"], "Moët Hennessy", "70cl Bottles", "World's favourite cognac with bold notes of toasted oak and fruit."),
-  make("Baileys Irish Cream", "baileys", "Spirits & Wine", ["Bottle"], "Diageo", "70cl / 1L Bottles", "The original Irish cream liqueur. Rich dairy cream and aged whiskey."),
-  make("Amarula Cream", "amarula", "Spirits & Wine", ["Bottle"], "Distell", "75cl / 1L Bottles", "Exotic South African cream liqueur made from wild marula fruit."),
-  make("Four Cousins Sweet Red", "four-cousins", "Spirits & Wine", ["Bottle"], "Van Loveren", "75cl Bottles", "South Africa's beloved natural sweet red wine. Fruity and easy-drinking."),
-  make("Carlo Rossi Sweet Red", "carlo-rossi", "Spirits & Wine", ["Bottle"], "E. & J. Gallo", "75cl Bottles", "Rich, sweet California red wine packed with red berry flavours."),
-  make("Moët & Chandon Brut", "moet-chandon", "Spirits & Wine", ["Bottle"], "Moët & Chandon", "75cl Bottles", "Prestigious French champagne with vibrant apple, citrus and brioche."),
-
   // --- SOFT DRINKS (All in Cans, plus dedicated Bottle Coke & Bottle Pepsi) ---
   make("Coca-Cola (Can)", "coca-cola", "Soft Drink", ["Can"], "NBC / Coca-Cola", "33cl Cans", "The classic refreshing cola in convenient chilled cans. Sold by the pack or carton."),
   make("Bottle Coke", "bottle-coke", "Soft Drink", ["Bottle"], "NBC / Coca-Cola", "35cl / 50cl Glass & PET Bottles", "Classic Coca-Cola in traditional bottles. Sold by the crate."),
@@ -132,7 +118,6 @@ export const drinkCategories: DrinkCategory[] = [
   "Malt",
   "Soft Drink",
   "Bitters",
-  "Spirits & Wine",
 ];
 
 export const drinkOptions = drinks.map((d) => ({

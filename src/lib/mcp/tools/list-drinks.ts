@@ -16,7 +16,6 @@ export default defineTool({
         "Malt",
         "Soft Drink",
         "Bitters",
-        "Spirits & Wine",
       ])
       .optional()
       .describe("Optional category filter."),

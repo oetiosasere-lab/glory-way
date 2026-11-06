@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { Section } from "@/components/section";
+import { getSiteSettings, defaultSiteSettings, type SiteSettings } from "@/lib/api";
+import { MapPin, Clock, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/address")({
   head: () => ({
@@ -8,21 +11,26 @@ export const Route = createFileRoute("/address")({
       {
         name: "description",
         content:
-          "Visit the Glory Way Limited warehouse in Ikpoba Okha, Benin City, Edo State. Open 11 hours a day, 6 days a week, 365 days a year.",
+          "Visit the Glory Way Limited warehouse at Imasabor Number 19 along olobo, Saple Road Junction, ossiomo Industrial park junction by kpoba Okha, Edo State, Nigeria.",
       },
       { property: "og:title", content: "Glory Way Limited — Address" },
       {
         property: "og:description",
         content:
-          "Warehouse in Ikpoba Okha, Benin City, Edo State. Open 11 hours a day, 6 days a week, 365 days a year.",
+          "Warehouse at Imasabor Number 19 along olobo, Saple Road Junction, ossiomo Industrial park junction by kpoba Okha, Edo State, Nigeria.",
       },
     ],
   }),
   component: AddressPage,
 });
 
-
 function AddressPage() {
+  const [settings, setSettings] = useState<SiteSettings>(defaultSiteSettings);
+
+  useEffect(() => {
+    getSiteSettings().then(setSettings).catch(console.error);
+  }, []);
+
   return (
     <div>
       <Section
@@ -32,30 +40,36 @@ function AddressPage() {
       >
         <div className="grid gap-6 md:grid-cols-3">
           <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-            <h3 className="font-display text-lg font-semibold">Warehouse</h3>
-            <p className="mt-2 text-sm text-foreground/80">
-              Imasabor Number 19 along olobo,<br />
-              Saple Road, Junction,<br />
-              ossiomo Industrial park junction by kpoba Okha,<br />
-              Edo State, Nigeria
+            <div className="flex items-center gap-2">
+              <MapPin className="h-5 w-5 text-primary" />
+              <h3 className="font-display text-lg font-semibold">Warehouse</h3>
+            </div>
+            <p className="mt-2 text-sm leading-relaxed text-foreground/80">
+              {settings.address}
             </p>
           </div>
+
           <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-            <p className="text-sm text-foreground/80">
-              Open 11 hours a day,<br />
-              6 days a week,<br />
-              365 days a year.
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-primary" />
+              <h3 className="font-display text-lg font-semibold">Opening Hours</h3>
+            </div>
+            <p className="mt-2 text-sm leading-relaxed text-foreground/80">
+              {settings.operating_hours}
             </p>
           </div>
+
           <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-            <h3 className="font-display text-lg font-semibold">Delivery</h3>
-            <p className="mt-2 text-sm text-foreground/80">
+            <div className="flex items-center gap-2">
+              <Truck className="h-5 w-5 text-primary" />
+              <h3 className="font-display text-lg font-semibold">Delivery</h3>
+            </div>
+            <p className="mt-2 text-sm leading-relaxed text-foreground/80">
               Same-day delivery across Benin City and Edo State during opening hours. Bulk delivery available
               to neighbouring towns on request.
             </p>
           </div>
         </div>
-
       </Section>
     </div>
   );

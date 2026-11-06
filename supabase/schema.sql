@@ -77,7 +77,7 @@ INSERT INTO public.site_settings (key, value)
 VALUES
     ('phone', '0705 165 6621'),
     ('email', 'gloryomosigho@gmail.com'),
-    ('address', 'Imasabor Number 19 Oduware, along Sapele Road, NNPC Junction, Ikpoba Okha, Benin City, Edo State, Nigeria'),
+    ('address', 'Imasabor Number 19 along olobo , Saple Road, Junction, ossiomo Industrial park junction by kpoba Okha, Edo State, Nigeria'),
     ('operating_hours', 'Open 11 hours a day, 6 days a week, 365 days a year'),
     ('announcement', 'Chilled drinks ready for bulk delivery across Benin City. Order today!')
 ON CONFLICT (key) DO NOTHING;
@@ -208,7 +208,7 @@ USING (bucket_id = 'product-images');
 -- ==========================================================
 INSERT INTO public.orders (customer_name, phone, email, drink_slug, drink_name, packaging, quantity, delivery_address, message, status)
 VALUES 
-    ('Osasere Test', '+234 801 234 5678', 'osasere@example.com', 'star', 'Star Lager (Bottle)', 'Bottle', '5 crates', 'Along Sapele Road NNPC Junction, Ikpoba Okha, Benin City', 'Please deliver by 3 PM.', 'pending'),
+    ('Osasere Test', '+234 801 234 5678', 'osasere@example.com', 'star', 'Star Lager (Bottle)', 'Bottle', '5 crates', 'Imasabor Number 19 along olobo , Saple Road, Junction, ossiomo Industrial park junction by kpoba Okha, Edo State, Nigeria', 'Please deliver by 3 PM.', 'pending'),
     ('Efe Johnson', '+234 802 345 6789', 'efe@example.com', 'heineken', 'Heineken (Can)', 'Can', '10 packs', '14 Airport Road, GRA, Benin City', 'Wedding gathering restock. Call driver on arrival.', 'confirmed'),
     ('Blessing Amadasun', '+234 803 456 7890', 'blessing@example.com', 'malta-guinness', 'Malta Guinness (Can)', 'Can', '3 packs', '22 Mission Road, Ring Road, Benin City', 'Delivered and paid in cash. Excellent service.', 'completed')
 ON CONFLICT DO NOTHING;

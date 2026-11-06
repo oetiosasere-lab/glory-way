@@ -276,7 +276,7 @@ export function OrderForm() {
           <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
             {...register("address")}
-            placeholder="e.g. 19 Oduware, along Sapele Road, Ikpoba Okha, Benin City"
+            placeholder="e.g. 19 along olobo, Saple Road, Ikpoba Okha, Benin City"
             className={`${inputCls} pl-9`}
           />
         </div>

@@ -7,7 +7,7 @@ const info = {
   phone: "0705 165 6621",
   email: "gloryomosigho@gmail.com",
   address:
-    "Imasabor Number 19 Oduware, along Saple Road, NNPC Junction, Ikpoba Okha, Benin City, Edo State, Nigeria",
+    "Imasabor Number 19 along olobo , Saple Road, Junction, ossiomo Industrial park junction by kpoba Okha, Edo State, Nigeria",
   hours: "Open 11 hours a day, 6 days a week, 365 days a year",
   soldBy: "Crates only — no single-bottle sales",
   ageRestriction: "Alcoholic drinks are sold to customers aged 18 and over only",

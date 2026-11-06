@@ -72,7 +72,7 @@ export type SiteSettings = {
 export const defaultSiteSettings: SiteSettings = {
   phone: "0705 165 6621",
   email: "gloryomosigho@gmail.com",
-  address: "Imasabor Number 19 Oduware, along Sapele Road, NNPC Junction, Ikpoba Okha, Benin City, Edo State, Nigeria",
+  address: "Imasabor Number 19 along olobo , Saple Road, Junction, ossiomo Industrial park junction by kpoba Okha, Edo State, Nigeria",
   operating_hours: "Open 11 hours a day, 6 days a week, 365 days a year",
   announcement: "Chilled drinks ready for bulk delivery across Benin City. Order today!",
 };

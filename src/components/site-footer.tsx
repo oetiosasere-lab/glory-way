@@ -45,7 +45,7 @@ export function SiteFooter() {
           </h4>
           <ul className="mt-4 space-y-3 text-sm text-secondary-foreground/85">
             <li>
-              <span>Imasabor Number 19 Oduware, along Saple Road, NNPC Junction, Ikpoba Okha, Edo State, Nigeria</span>
+              <span>Imasabor Number 19 along olobo , Saple Road, Junction, ossiomo Industrial park junction by kpoba Okha, Edo State, Nigeria</span>
             </li>
             <li>
               <a href="tel:07051656621" className="hover:text-primary">

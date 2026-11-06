@@ -1228,7 +1228,7 @@ function AdminPage() {
                   rows={3}
                   value={siteSettings.address}
                   onChange={(e) => setSiteSettings({ ...siteSettings, address: e.target.value })}
-                  placeholder="e.g. Imasabor Number 19 Oduware, along Sapele Road..."
+                  placeholder="e.g. Imasabor Number 19 along olobo , Saple Road..."
                   className="mt-1 w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                   required
                 />

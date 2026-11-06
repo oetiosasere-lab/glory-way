@@ -34,10 +34,10 @@ function AddressPage() {
           <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <h3 className="font-display text-lg font-semibold">Warehouse</h3>
             <p className="mt-2 text-sm text-foreground/80">
-              Imasabor Number 19 Oduware,<br />
-              along Saple Road,<br />
-              NNPC Junction, Ikpoba Okha,<br />
-              Benin City, Edo State, Nigeria
+              Imasabor Number 19 along olobo,<br />
+              Saple Road, Junction,<br />
+              ossiomo Industrial park junction by kpoba Okha,<br />
+              Edo State, Nigeria
             </p>
           </div>
           <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">

@@ -11,13 +11,13 @@ export const Route = createFileRoute("/address")({
       {
         name: "description",
         content:
-          "Visit the Glory Way Limited warehouse at Imasabor Number 19 along olobo, Saple Road Junction, ossiomo Industrial park junction by kpoba Okha, Edo State, Nigeria.",
+          "Visit the Glory Way Limited warehouse at Imasabor Number 19 along ologbo, Saple Road Junction, ossiomo Industrial park junction by ikpoba Okha, Edo State, Nigeria.",
       },
       { property: "og:title", content: "Glory Way Limited — Address" },
       {
         property: "og:description",
         content:
-          "Warehouse at Imasabor Number 19 along olobo, Saple Road Junction, ossiomo Industrial park junction by kpoba Okha, Edo State, Nigeria.",
+          "Warehouse at Imasabor Number 19 along ologbo, Saple Road Junction, ossiomo Industrial park junction by ikpoba Okha, Edo State, Nigeria.",
       },
     ],
   }),

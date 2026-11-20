@@ -84,20 +84,6 @@ function Hero() {
               View drinks
             </Link>
           </div>
-          <dl className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-primary/20 pt-6 text-sm">
-            <div>
-              <dt className="text-secondary-foreground/70">Years serving</dt>
-              <dd className="mt-1 font-display text-2xl font-semibold text-primary">12+</dd>
-            </div>
-            <div>
-              <dt className="text-secondary-foreground/70">Open daily</dt>
-              <dd className="mt-1 font-display text-2xl font-semibold text-primary">11 hours</dd>
-            </div>
-            <div>
-              <dt className="text-secondary-foreground/70">Brands stocked</dt>
-              <dd className="mt-1 font-display text-2xl font-semibold text-primary">40+</dd>
-            </div>
-          </dl>
         </div>
         <div className="relative">
           <div className="absolute -inset-4 rounded-3xl bg-primary/20 blur-2xl" aria-hidden />

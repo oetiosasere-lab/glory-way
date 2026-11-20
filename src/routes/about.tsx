@@ -63,28 +63,35 @@ function AboutPage() {
       </Section>
 
       <Section eyebrow="Meet the owner" title="The person behind the crates.">
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+        <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
           <div className="order-2 lg:order-1 space-y-4 text-foreground/85">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+              Mrs. Glory Omosigho · Managing Director
+            </div>
             <p>
               She built the business on the belief that adults deserve a supplier
-              they can trust — one that
-              answers the phone, keeps its promises, and delivers exactly what was
-              ordered.
+              they can trust — one that answers the phone, keeps its promises, and
+              delivers exactly what was ordered.
             </p>
             <p>
               Her standard is simple: every customer is treated like a neighbour,
               and every crate must leave the warehouse in perfect condition. That
               is the promise behind every delivery we make.
             </p>
+            <div className="mt-4 rounded-xl border border-border bg-card/60 p-4 text-xs text-muted-foreground">
+              <span className="font-semibold text-foreground">Direct Warehouse Guarantee:</span> Every order is verified, inspected, and sealed prior to dispatch from our Ikpoba Okha facility.
+            </div>
           </div>
-          <img
-            src={ownerImg}
-            alt="Portrait of the owner of Glory Way Limited"
-            loading="lazy"
-            width={1200}
-            height={1200}
-            className="order-1 aspect-square w-full rounded-2xl object-cover shadow-lg lg:order-2"
-          />
+          <div className="order-1 lg:order-2 flex justify-center">
+            <img
+              src={ownerImg}
+              alt="Portrait of Mrs. Glory Omosigho, Managing Director of Glory Way Limited"
+              loading="lazy"
+              width={800}
+              height={900}
+              className="aspect-[4/5] max-w-sm w-full rounded-2xl object-cover shadow-xl border border-border/40"
+            />
+          </div>
         </div>
       </Section>
 

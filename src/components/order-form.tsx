@@ -57,6 +57,24 @@ export function OrderForm() {
   const watchedDrink = watch("drink");
   const selectedDrink = drinks.find((d) => d.slug === watchedDrink);
 
+  // Check URL params for pre-selected drink (e.g. from /drinks Order Now buttons)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const drinkParam = params.get("drink");
+      if (drinkParam) {
+        const found = drinks.find(
+          (d) =>
+            d.slug.toLowerCase() === drinkParam.toLowerCase() ||
+            d.name.toLowerCase() === drinkParam.toLowerCase()
+        );
+        if (found) {
+          setValue("drink", found.slug);
+        }
+      }
+    }
+  }, [setValue]);
+
   // Automatically adjust packaging options if drink is only available in Can or Bottle
   useEffect(() => {
     if (selectedDrink) {
@@ -150,12 +168,12 @@ export function OrderForm() {
 
         <div className="mt-5 space-y-3 rounded-xl border border-primary/20 bg-card/60 p-4 text-sm">
           <div className="flex items-center gap-2">
-            <Package className="h-4 w-4 text-primary" />
-            <span>
+            <Package className="h-4 w-4 text-primary shrink-0" />
+            <span className="flex items-center flex-wrap gap-1.5">
               <strong>Item:</strong> {submitted.quantity} of{" "}
-              <strong className="text-primary">
+              <span className="inline-flex items-center rounded-md border border-amber-500/40 bg-amber-500/15 px-2.5 py-0.5 text-sm font-extrabold text-amber-400 shadow-sm">
                 {displayName} ({submitted.packaging})
-              </strong>
+              </span>
             </span>
           </div>
           <div className="flex items-start gap-2">

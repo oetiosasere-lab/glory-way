@@ -1,4 +1,6 @@
 import type { Drink } from "@/lib/drinks";
+import { Link } from "@tanstack/react-router";
+import { ShoppingBag } from "lucide-react";
 
 export function DrinkCard({ drink }: { drink: Drink }) {
   return (
@@ -22,6 +24,18 @@ export function DrinkCard({ drink }: { drink: Drink }) {
           <span className="rounded-full bg-background/90 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-foreground shadow-sm">
             {drink.category}
           </span>
+        </div>
+
+        {/* Order Now button directly on the image */}
+        <div className="absolute inset-x-3 bottom-3 z-10">
+          <Link
+            to="/contact"
+            search={{ drink: drink.slug } as any}
+            className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-primary px-3.5 py-2.5 text-xs font-bold text-primary-foreground shadow-md transition-all duration-200 hover:bg-primary/90 hover:scale-[1.02] active:scale-95"
+          >
+            <ShoppingBag className="h-3.5 w-3.5" />
+            Order Now
+          </Link>
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-2 p-5">

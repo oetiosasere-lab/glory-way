@@ -13,6 +13,17 @@ export class EnquiriesService {
     return this.supabaseService.getEnquiries();
   }
 
+  async create(enquiry: {
+    name: string;
+    email: string;
+    phone?: string;
+    subject?: string;
+    message: string;
+  }): Promise<void> {
+    this.logger.log(`Submitting customer enquiry from ${enquiry.name} via NestJS`);
+    return this.supabaseService.createEnquiry(enquiry);
+  }
+
   async updateStatus(id: string, status: Enquiry["status"]): Promise<void> {
     this.logger.log(`Updating enquiry ${id} status to ${status} via NestJS`);
     return this.supabaseService.updateEnquiryStatus(id, status);

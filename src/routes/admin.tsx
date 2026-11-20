@@ -443,14 +443,18 @@ function AdminPage() {
         {/* Top Header */}
         <div className="flex flex-col gap-4 border-b border-border/80 pb-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="rounded-full bg-primary/15 px-3 py-0.5 text-xs font-bold uppercase tracking-wider text-primary">
                 Glory Way Admin
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                <CheckCircle className="h-3 w-3" />
+                NestJS + Supabase Active
               </span>
               {!isSupabaseConfigured() && (
                 <span className="flex items-center gap-1 rounded-full bg-amber-500/15 px-2.5 py-0.5 text-xs font-medium text-amber-600 dark:text-amber-400">
                   <AlertCircle className="h-3 w-3" />
-                  Supabase Key Needed
+                  Local Fallback Active
                 </span>
               )}
             </div>

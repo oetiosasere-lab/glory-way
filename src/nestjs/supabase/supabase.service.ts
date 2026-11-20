@@ -241,6 +241,30 @@ export class SupabaseService {
   }
 
   // --- Enquiries ---
+  async createEnquiry(enquiry: {
+    name: string;
+    email: string;
+    phone?: string;
+    subject?: string;
+    message: string;
+  }): Promise<void> {
+    if (!this.hasValidConfig() || !this.client) {
+      if (typeof window !== "undefined") {
+        const local = JSON.parse(localStorage.getItem("glory_way_enquiries") || "[]");
+        local.unshift({
+          ...enquiry,
+          id: `enq-${Date.now()}`,
+          created_at: new Date().toISOString(),
+          status: "unread",
+        });
+        localStorage.setItem("glory_way_enquiries", JSON.stringify(local));
+      }
+      return;
+    }
+    const { error } = await this.client.from("enquiries").insert([enquiry]);
+    if (error) throw error;
+  }
+
   async getEnquiries(): Promise<Enquiry[]> {
     if (!this.hasValidConfig() || !this.client) {
       if (typeof window !== "undefined") {

@@ -69,9 +69,6 @@ function AboutPage() {
       >
         <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
           <div className="order-2 lg:order-1 rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-sm space-y-4">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
-              Leadership & Commitment
-            </span>
             <h3 className="font-display text-2xl font-semibold text-foreground">
               Built on trust, verified delivery, and family care.
             </h3>

@@ -1,8 +1,11 @@
 import { Module } from "@nestjs/common";
 import { SettingsService } from "./settings.service";
 
-@Module({
+class SettingsModule {}
+
+Module({
   providers: [SettingsService],
   exports: [SettingsService],
-})
-export class SettingsModule {}
+})(SettingsModule);
+
+export { SettingsModule };

@@ -1,8 +1,11 @@
 import { Module } from "@nestjs/common";
 import { EnquiriesService } from "./enquiries.service";
 
-@Module({
+class EnquiriesModule {}
+
+Module({
   providers: [EnquiriesService],
   exports: [EnquiriesService],
-})
-export class EnquiriesModule {}
+})(EnquiriesModule);
+
+export { EnquiriesModule };

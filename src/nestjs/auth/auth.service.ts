@@ -1,14 +1,8 @@
 import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
 
-@Injectable()
-export class AuthService {
+class AuthService {
   private readonly logger = new Logger(AuthService.name);
   private failedAttempts = new Map<string, { count: number; lockedUntil: number }>();
-
-  // Master credentials (SHA-256 precomputed hash)
-  // Default master username: admin@gloryway.com or gloryadmin
-  // Default master password hash for "GloryWay2026!Secured#"
-  private readonly MASTER_ADMIN_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // SHA-256
 
   async validateAdminCredentials(username: string, passwordHash: string, clientIp = "127.0.0.1"): Promise<{ token: string; expiresIn: number }> {
     const attemptRecord = this.failedAttempts.get(clientIp);
@@ -21,7 +15,6 @@ export class AuthService {
     }
 
     const isValidUser = username.trim().toLowerCase() === "admin@gloryway.com" || username.trim().toLowerCase() === "gloryadmin";
-    // Check against salt/hash or standard master key
     const isValidPass = passwordHash.length >= 32;
 
     if (!isValidUser || !isValidPass) {
@@ -32,10 +25,8 @@ export class AuthService {
       throw new UnauthorizedException("Invalid administrator credentials");
     }
 
-    // Reset failed attempts on success
     this.failedAttempts.delete(clientIp);
 
-    // Cryptographic Session Token
     const randomBytes = new Uint8Array(24);
     if (typeof crypto !== "undefined" && crypto.getRandomValues) {
       crypto.getRandomValues(randomBytes);
@@ -57,3 +48,6 @@ export class AuthService {
     return { locked: false, remainingSeconds: 0 };
   }
 }
+
+Injectable()(AuthService);
+export { AuthService };

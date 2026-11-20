@@ -1,8 +1,11 @@
 import { Module } from "@nestjs/common";
 import { OrdersService } from "./orders.service";
 
-@Module({
+class OrdersModule {}
+
+Module({
   providers: [OrdersService],
   exports: [OrdersService],
-})
-export class OrdersModule {}
+})(OrdersModule);
+
+export { OrdersModule };

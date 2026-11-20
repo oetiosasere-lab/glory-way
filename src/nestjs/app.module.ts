@@ -6,9 +6,7 @@ import { EnquiriesModule } from "./enquiries/enquiries.module";
 import { SettingsModule } from "./settings/settings.module";
 import { AuthModule } from "./auth/auth.module";
 
-class AppModule {}
-
-Module({
+@Module({
   imports: [
     SupabaseModule,
     OrdersModule,
@@ -17,6 +15,5 @@ Module({
     SettingsModule,
     AuthModule,
   ],
-})(AppModule);
-
-export { AppModule };
+})
+export class AppModule {}

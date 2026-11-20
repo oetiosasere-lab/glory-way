@@ -34,7 +34,7 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-export function OrderForm() {
+export function OrderForm({ initialDrink }: { initialDrink?: string } = {}) {
   const [submitted, setSubmitted] = useState<FormValues | null>(null);
   const {
     register,
@@ -46,7 +46,7 @@ export function OrderForm() {
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      drink: "",
+      drink: initialDrink || "",
       packaging: "Bottle",
       quantity: "1 crate",
       address: "",
@@ -57,23 +57,17 @@ export function OrderForm() {
   const watchedDrink = watch("drink");
   const selectedDrink = drinks.find((d) => d.slug === watchedDrink);
 
-  // Check URL params for pre-selected drink (e.g. from /drinks Order Now buttons)
+  // Sync initialDrink from prop or URL
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      const drinkParam = params.get("drink");
-      if (drinkParam) {
-        const found = drinks.find(
-          (d) =>
-            d.slug.toLowerCase() === drinkParam.toLowerCase() ||
-            d.name.toLowerCase() === drinkParam.toLowerCase()
-        );
-        if (found) {
-          setValue("drink", found.slug);
-        }
+    if (initialDrink) {
+      setValue("drink", initialDrink);
+    } else if (typeof window !== "undefined") {
+      const urlParam = new URLSearchParams(window.location.search).get("drink");
+      if (urlParam && drinks.some((d) => d.slug === urlParam)) {
+        setValue("drink", urlParam);
       }
     }
-  }, [setValue]);
+  }, [initialDrink, setValue]);
 
   // Automatically adjust packaging options if drink is only available in Can or Bottle
   useEffect(() => {
@@ -151,47 +145,55 @@ export function OrderForm() {
     const drinkObj = drinks.find((d) => d.slug === submitted.drink);
     const displayName = drinkObj?.name ?? submitted.drink;
     return (
-      <div className="rounded-2xl border border-primary/30 bg-secondary p-8 text-secondary-foreground shadow-lg">
-        <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 text-primary">
-            <CheckCircle className="h-6 w-6" />
+      <div className="rounded-2xl border-2 border-primary/40 bg-card p-6 sm:p-8 text-foreground shadow-xl transition-all">
+        {/* Header with high contrast checkmark */}
+        <div className="flex items-center gap-4 border-b border-border pb-5">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 shadow-inner">
+            <CheckCircle className="h-8 w-8" />
           </div>
           <div>
-            <h3 className="font-display text-2xl font-semibold">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
+              Order Received
+            </span>
+            <h3 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-foreground">
               Thank you, {submitted.name.split(" ")[0]}!
             </h3>
-            <p className="text-xs text-secondary-foreground/70">
-              Order enquiry received
-            </p>
           </div>
         </div>
 
-        <div className="mt-5 space-y-3 rounded-xl border border-primary/20 bg-card/60 p-4 text-sm">
-          <div className="flex items-center gap-2">
-            <Package className="h-4 w-4 text-primary shrink-0" />
-            <span className="flex items-center flex-wrap gap-1.5">
-              <strong>Item:</strong> {submitted.quantity} of{" "}
-              <span className="inline-flex items-center rounded-md border border-amber-500/40 bg-amber-500/15 px-2.5 py-0.5 text-sm font-extrabold text-amber-400 shadow-sm">
-                {displayName} ({submitted.packaging})
+        {/* Order Details Box - crisp high-contrast */}
+        <div className="mt-6 space-y-3.5 rounded-xl border border-border bg-muted/60 p-5 text-sm sm:text-base">
+          <div className="flex items-start gap-3">
+            <Package className="h-5 w-5 shrink-0 text-primary mt-0.5" />
+            <div className="text-foreground leading-normal">
+              <span className="font-semibold text-muted-foreground">Order details:</span>{" "}
+              <strong className="text-foreground">{submitted.quantity}</strong> of{" "}
+              <strong className="text-primary font-bold">{displayName}</strong>{" "}
+              <span className="inline-block rounded-md border border-primary/30 bg-primary/10 px-2 py-0.5 text-xs font-bold text-primary">
+                {submitted.packaging}
               </span>
-            </span>
+            </div>
           </div>
-          <div className="flex items-start gap-2">
-            <MapPin className="h-4 w-4 shrink-0 text-primary mt-0.5" />
-            <span>
-              <strong>Delivery to:</strong> {submitted.address}
-            </span>
+
+          <div className="flex items-start gap-3">
+            <MapPin className="h-5 w-5 shrink-0 text-primary mt-0.5" />
+            <div className="text-foreground leading-normal">
+              <span className="font-semibold text-muted-foreground">Delivery address:</span>{" "}
+              <strong className="text-foreground">{submitted.address}</strong>
+            </div>
           </div>
         </div>
 
-        <p className="mt-4 text-sm text-secondary-foreground/85">
-          A Glory Way Limited team member will call you on{" "}
-          <strong>{submitted.phone}</strong> within a few minutes to confirm your
-          order rate and arrange fast delivery.
-        </p>
+        {/* Follow-up Note */}
+        <div className="mt-5 rounded-xl border border-primary/30 bg-primary/10 p-4">
+          <p className="text-sm font-medium text-foreground leading-relaxed">
+            A Glory Way Limited team member will call you directly at{" "}
+            <strong className="font-bold text-primary underline underline-offset-2">{submitted.phone}</strong> within a few minutes to confirm crate quantities, price, and dispatch your order.
+          </p>
+        </div>
 
-        <p className="mt-3 text-xs text-secondary-foreground/70">
-          Open 11 hours daily, 6 days a week across Benin City and Edo State.
+        <p className="mt-4 text-xs font-medium text-muted-foreground">
+          Delivering 6 days a week across Benin City and Edo State. ID verification (18+) at the door.
         </p>
 
         <button
@@ -200,7 +202,7 @@ export function OrderForm() {
             reset();
             setSubmitted(null);
           }}
-          className="mt-6 inline-flex rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
+          className="mt-6 inline-flex items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground shadow-md transition-all hover:opacity-95 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
         >
           Send another order enquiry
         </button>

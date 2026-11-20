@@ -1,5 +1,5 @@
-import type { Drink } from "@/lib/drinks";
 import { Link } from "@tanstack/react-router";
+import type { Drink } from "@/lib/drinks";
 import { ShoppingBag } from "lucide-react";
 
 export function DrinkCard({ drink }: { drink: Drink }) {
@@ -25,41 +25,43 @@ export function DrinkCard({ drink }: { drink: Drink }) {
             {drink.category}
           </span>
         </div>
+      </div>
+      <div className="flex flex-1 flex-col justify-between p-5">
+        <div className="space-y-2">
+          <div className="flex items-baseline justify-between gap-3">
+            <h3 className="font-display text-lg font-semibold">{drink.name}</h3>
+            <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+              By crate / pack
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+            <span className="font-medium">{drink.size}</span>
+            <span>•</span>
+            <div className="flex items-center gap-1">
+              {drink.packageTypes.map((pkg) => (
+                <span
+                  key={pkg}
+                  className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary"
+                >
+                  {pkg}
+                </span>
+              ))}
+            </div>
+          </div>
+          <p className="mt-1 text-sm text-foreground/80 line-clamp-2">{drink.note}</p>
+        </div>
 
-        {/* Order Now button directly on the image */}
-        <div className="absolute inset-x-3 bottom-3 z-10">
+        {/* Order Now Button */}
+        <div className="pt-4 mt-auto">
           <Link
             to="/contact"
-            search={{ drink: drink.slug } as any}
-            className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-primary px-3.5 py-2.5 text-xs font-bold text-primary-foreground shadow-md transition-all duration-200 hover:bg-primary/90 hover:scale-[1.02] active:scale-95"
+            search={{ drink: drink.slug }}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-sm transition-all hover:opacity-95 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
           >
-            <ShoppingBag className="h-3.5 w-3.5" />
+            <ShoppingBag className="h-4 w-4" />
             Order Now
           </Link>
         </div>
-      </div>
-      <div className="flex flex-1 flex-col gap-2 p-5">
-        <div className="flex items-baseline justify-between gap-3">
-          <h3 className="font-display text-lg font-semibold">{drink.name}</h3>
-          <span className="text-xs font-semibold uppercase tracking-wider text-primary">
-            By the crate / pack
-          </span>
-        </div>
-        <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
-          <span className="font-medium">{drink.size}</span>
-          <span>•</span>
-          <div className="flex items-center gap-1">
-            {drink.packageTypes.map((pkg) => (
-              <span
-                key={pkg}
-                className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary"
-              >
-                {pkg}
-              </span>
-            ))}
-          </div>
-        </div>
-        <p className="mt-1 text-sm text-foreground/80">{drink.note}</p>
       </div>
     </article>
   );

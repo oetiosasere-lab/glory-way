@@ -62,34 +62,49 @@ function AboutPage() {
         </div>
       </Section>
 
-      <Section eyebrow="Meet the owner" title="The person behind the crates.">
+      <Section
+        eyebrow="Meet the owner"
+        title="The person behind the crates."
+        className="pt-0 lg:pt-0"
+      >
         <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
-          <div className="order-2 lg:order-1 space-y-4 text-foreground/85">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-              Mrs. Glory Omosigho · Managing Director
-            </div>
-            <p>
-              She built the business on the belief that adults deserve a supplier
-              they can trust — one that answers the phone, keeps its promises, and
-              delivers exactly what was ordered.
+          <div className="order-2 lg:order-1 rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-sm space-y-4">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
+              Leadership & Commitment
+            </span>
+            <h3 className="font-display text-2xl font-semibold text-foreground">
+              Built on trust, verified delivery, and family care.
+            </h3>
+            <p className="text-sm sm:text-base leading-relaxed text-foreground/85">
+              She built Glory Way Limited on the firm belief that customers deserve a supplier
+              they can depend on — one that answers the phone promptly, keeps its promises,
+              and delivers exactly what was ordered.
             </p>
-            <p>
+            <p className="text-sm sm:text-base leading-relaxed text-foreground/85">
               Her standard is simple: every customer is treated like a neighbour,
-              and every crate must leave the warehouse in perfect condition. That
-              is the promise behind every delivery we make.
+              and every crate must leave the warehouse chilled and in perfect condition. That
+              is the personal guarantee behind every delivery across Edo State.
             </p>
-            <div className="mt-4 rounded-xl border border-border bg-card/60 p-4 text-xs text-muted-foreground">
-              <span className="font-semibold text-foreground">Direct Warehouse Guarantee:</span> Every order is verified, inspected, and sealed prior to dispatch from our Ikpoba Okha facility.
+            <div className="pt-2 border-t border-border flex items-center gap-6 text-xs text-muted-foreground">
+              <div>
+                <span className="font-semibold text-foreground text-sm">12+ Years</span>
+                <p>Serving Benin City</p>
+              </div>
+              <div className="h-8 w-px bg-border" />
+              <div>
+                <span className="font-semibold text-foreground text-sm">100% Licensed</span>
+                <p>Authentic Drinks Only</p>
+              </div>
             </div>
           </div>
           <div className="order-1 lg:order-2 flex justify-center">
             <img
               src={ownerImg}
-              alt="Portrait of Mrs. Glory Omosigho, Managing Director of Glory Way Limited"
+              alt="Portrait of the owner of Glory Way Limited"
               loading="lazy"
               width={800}
               height={900}
-              className="aspect-[4/5] max-w-sm w-full rounded-2xl object-cover shadow-xl border border-border/40"
+              className="aspect-[4/5] max-w-sm sm:max-w-md w-full rounded-2xl object-cover shadow-xl border border-border"
             />
           </div>
         </div>

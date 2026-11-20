@@ -6,6 +6,9 @@ import { getSiteSettings, defaultSiteSettings, type SiteSettings } from "@/lib/a
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
+  validateSearch: (search: Record<string, unknown>): { drink?: string } => ({
+    drink: typeof search.drink === "string" ? search.drink : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Contact & Order Enquiry — Glory Way Limited" },
@@ -26,6 +29,7 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const { drink } = Route.useSearch();
   const [settings, setSettings] = useState<SiteSettings>(defaultSiteSettings);
 
   useEffect(() => {
@@ -40,7 +44,7 @@ function ContactPage() {
         description="Fill in the enquiry form and a Glory Way Limited team member will confirm your drinks, price, and delivery time within minutes."
       >
         <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
-          <OrderForm />
+          <OrderForm initialDrink={drink} />
           <aside className="space-y-4">
             <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
               <h3 className="font-display text-lg font-semibold">

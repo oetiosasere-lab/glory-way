@@ -3,7 +3,8 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import type { Order, Product, Enquiry, SiteSettings } from "@/lib/supabase";
 import { defaultSiteSettings } from "@/lib/supabase";
 
-class SupabaseService {
+@Injectable()
+export class SupabaseService {
   private readonly logger = new Logger(SupabaseService.name);
   private client: SupabaseClient | null = null;
   private isConfigured = false;
@@ -343,6 +344,3 @@ class SupabaseService {
     if (error) throw error;
   }
 }
-
-Injectable()(SupabaseService);
-export { SupabaseService };

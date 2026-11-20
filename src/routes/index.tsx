@@ -58,10 +58,7 @@ function Hero() {
       <div className="pointer-events-none absolute inset-0 opacity-30 [background:radial-gradient(60%_60%_at_80%_20%,color-mix(in_oklab,var(--color-primary)_50%,transparent),transparent)]" />
       <div className="relative mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:py-24">
         <div ref={ref} className="reveal">
-          <p className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary">
-            Open 11 hours a day, 6 days a week
-          </p>
-          <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.05] sm:text-5xl lg:text-6xl">
+          <h1 className="font-display text-4xl font-semibold leading-[1.05] sm:text-5xl lg:text-6xl">
             Your favourite drinks,{" "}
             <span className="text-primary">delivered to your door.</span>
           </h1>
@@ -84,6 +81,20 @@ function Hero() {
               View drinks
             </Link>
           </div>
+          <dl className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-primary/20 pt-6 text-sm">
+            <div>
+              <dt className="text-secondary-foreground/70">Years serving</dt>
+              <dd className="mt-1 font-display text-2xl font-semibold text-primary">12+</dd>
+            </div>
+            <div>
+              <dt className="text-secondary-foreground/70">Open daily</dt>
+              <dd className="mt-1 font-display text-2xl font-semibold text-primary">11 hours</dd>
+            </div>
+            <div>
+              <dt className="text-secondary-foreground/70">Brands stocked</dt>
+              <dd className="mt-1 font-display text-2xl font-semibold text-primary">40+</dd>
+            </div>
+          </dl>
         </div>
         <div className="relative">
           <div className="absolute -inset-4 rounded-3xl bg-primary/20 blur-2xl" aria-hidden />

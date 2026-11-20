@@ -2,7 +2,8 @@ import { Injectable, Logger } from "@nestjs/common";
 import { SupabaseService } from "../supabase/supabase.service";
 import type { Order } from "@/lib/supabase";
 
-class OrdersService {
+@Injectable()
+export class OrdersService {
   private readonly logger = new Logger(OrdersService.name);
 
   constructor(private readonly supabaseService: SupabaseService) {}
@@ -27,6 +28,3 @@ class OrdersService {
     return this.supabaseService.deleteOrder(id);
   }
 }
-
-Injectable()(OrdersService);
-export { OrdersService };

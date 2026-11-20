@@ -2,7 +2,8 @@ import { Injectable, Logger } from "@nestjs/common";
 import { SupabaseService } from "../supabase/supabase.service";
 import type { SiteSettings } from "@/lib/supabase";
 
-class SettingsService {
+@Injectable()
+export class SettingsService {
   private readonly logger = new Logger(SettingsService.name);
 
   constructor(private readonly supabaseService: SupabaseService) {}
@@ -17,6 +18,3 @@ class SettingsService {
     return this.supabaseService.saveSiteSettings(settings);
   }
 }
-
-Injectable()(SettingsService);
-export { SettingsService };

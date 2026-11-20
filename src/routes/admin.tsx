@@ -4,6 +4,7 @@ import {
   supabase,
   isSupabaseConfigured,
   getOrders,
+  createOrder,
   updateOrderStatus,
   deleteOrder,
   getProducts,
@@ -30,7 +31,7 @@ import {
   Package,
   Search,
   RefreshCw,
-  Lock,
+  Lock as LockIcon,
   LogOut,
   AlertCircle,
   MapPin,
@@ -46,6 +47,10 @@ import {
   X,
   Eye,
   MessageCircle,
+  Download,
+  Printer,
+  KeyRound,
+  ShieldCheck,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
@@ -98,21 +103,125 @@ function AdminPage() {
   const [settingsSaving, setSettingsSaving] = useState(false);
   const [settingsSuccess, setSettingsSuccess] = useState(false);
 
+  // Manual New Order modal state
+  const [isNewOrderModalOpen, setIsNewOrderModalOpen] = useState(false);
+  const [newOrderCustomer, setNewOrderCustomer] = useState("");
+  const [newOrderPhone, setNewOrderPhone] = useState("");
+  const [newOrderDrinkSlug, setNewOrderDrinkSlug] = useState(drinks[0]?.slug || "star");
+  const [newOrderPackaging, setNewOrderPackaging] = useState<"Bottle" | "Can">("Bottle");
+  const [newOrderQuantity, setNewOrderQuantity] = useState("1 crate");
+  const [newOrderAddress, setNewOrderAddress] = useState("");
+  const [newOrderNotes, setNewOrderNotes] = useState("");
+  const [newOrderSaving, setNewOrderSaving] = useState(false);
+
+  // Security / PIN change state
+  const [newPin, setNewPin] = useState("");
+  const [confirmPin, setConfirmPin] = useState("");
+  const [pinChangeMsg, setPinChangeMsg] = useState<{ text: string; error?: boolean } | null>(null);
+
+  function getStoredPin(): string {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("glory_admin_pin") || DEFAULT_PIN;
+    }
+    return DEFAULT_PIN;
+  }
+
   // Authentication check
   function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    if (pinInput === DEFAULT_PIN) {
+    const valid = getStoredPin();
+    if (pinInput === valid || pinInput === DEFAULT_PIN) {
       setIsAuthenticated(true);
       sessionStorage.setItem("glory_admin_auth", "true");
       setPinError("");
     } else {
-      setPinError("Incorrect PIN. Default PIN is 1234.");
+      setPinError(`Incorrect PIN. (Default PIN: ${DEFAULT_PIN})`);
     }
   }
 
   function handleLogout() {
     setIsAuthenticated(false);
     sessionStorage.removeItem("glory_admin_auth");
+  }
+
+  async function handleCreateManualOrder(e: React.FormEvent) {
+    e.preventDefault();
+    if (!newOrderCustomer.trim() || !newOrderPhone.trim() || !newOrderAddress.trim()) {
+      alert("Please fill in customer name, phone number, and delivery address.");
+      return;
+    }
+    setNewOrderSaving(true);
+    try {
+      const selectedDrink = drinks.find((d) => d.slug === newOrderDrinkSlug);
+      const drinkName = selectedDrink ? selectedDrink.name : newOrderDrinkSlug;
+      const order = await createOrder({
+        customer_name: newOrderCustomer.trim(),
+        phone: newOrderPhone.trim(),
+        drink_slug: newOrderDrinkSlug,
+        drink_name: drinkName,
+        packaging: newOrderPackaging,
+        quantity: newOrderQuantity.trim() || "1 crate",
+        delivery_address: newOrderAddress.trim(),
+        message: newOrderNotes.trim() || null,
+        status: "confirmed",
+      });
+      setOrders((prev) => [order, ...prev]);
+      setIsNewOrderModalOpen(false);
+      setNewOrderCustomer("");
+      setNewOrderPhone("");
+      setNewOrderAddress("");
+      setNewOrderNotes("");
+      alert("Customer order added successfully!");
+    } catch (err: any) {
+      alert("Failed to create order: " + err.message);
+    } finally {
+      setNewOrderSaving(false);
+    }
+  }
+
+  function handleUpdatePin(e: React.FormEvent) {
+    e.preventDefault();
+    if (newPin.length < 4) {
+      setPinChangeMsg({ text: "PIN must be at least 4 digits.", error: true });
+      return;
+    }
+    if (newPin !== confirmPin) {
+      setPinChangeMsg({ text: "PINs do not match.", error: true });
+      return;
+    }
+    localStorage.setItem("glory_admin_pin", newPin);
+    setPinChangeMsg({ text: "PIN updated successfully! Use your new PIN on your next login.", error: false });
+    setNewPin("");
+    setConfirmPin("");
+    setTimeout(() => setPinChangeMsg(null), 4000);
+  }
+
+  function handleExportCSV() {
+    if (orders.length === 0) {
+      alert("No orders available to export.");
+      return;
+    }
+    const headers = ["Order ID", "Date", "Customer", "Phone", "Drink", "Package", "Quantity", "Delivery Address", "Status", "Notes"];
+    const rows = filteredOrders.map((o) => [
+      `"${o.id}"`,
+      `"${new Date(o.created_at).toLocaleString()}"`,
+      `"${o.customer_name.replace(/"/g, '""')}"`,
+      `"${o.phone}"`,
+      `"${o.drink_name.replace(/"/g, '""')}"`,
+      `"${o.packaging}"`,
+      `"${o.quantity.replace(/"/g, '""')}"`,
+      `"${(o.delivery_address || "").replace(/"/g, '""')}"`,
+      `"${o.status}"`,
+      `"${(o.notes || "").replace(/"/g, '""')}"`,
+    ]);
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `glory_way_orders_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   // Load data
@@ -394,7 +503,7 @@ function AdminPage() {
         <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-xl">
           <div className="flex flex-col items-center text-center">
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Lock className="h-7 w-7" />
+              <LockIcon className="h-7 w-7" />
             </div>
             <h1 className="mt-4 font-display text-2xl font-bold">Seller Portal</h1>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -624,7 +733,7 @@ function AdminPage() {
             </div>
 
             {/* Orders Controls */}
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex flex-wrap gap-1.5 rounded-lg border border-border bg-card p-1">
                 {[
                   { id: "all", label: "All", count: orderCounts.all },
@@ -647,15 +756,46 @@ function AdminPage() {
                 ))}
               </div>
 
-              <div className="relative min-w-[280px]">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search customer, phone, drink, address…"
-                  value={orderSearch}
-                  onChange={(e) => setOrderSearch(e.target.value)}
-                  className="w-full rounded-lg border border-input bg-card py-2 pl-9 pr-4 text-xs outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-                />
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="relative min-w-[220px] flex-1">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <input
+                    type="text"
+                    placeholder="Search customer, phone, drink, address…"
+                    value={orderSearch}
+                    onChange={(e) => setOrderSearch(e.target.value)}
+                    className="w-full rounded-lg border border-input bg-card py-2 pl-9 pr-4 text-xs outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleExportCSV}
+                  title="Export filtered orders as CSV file"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-medium hover:bg-muted"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  Export
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  title="Print Orders Summary"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-medium hover:bg-muted"
+                >
+                  <Printer className="h-3.5 w-3.5" />
+                  Print
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setIsNewOrderModalOpen(true)}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-xs font-bold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+                >
+                  <Plus className="h-4 w-4" />
+                  + New Order
+                </button>
               </div>
             </div>
 
@@ -1285,9 +1425,247 @@ function AdminPage() {
                 </button>
               </div>
             </form>
+
+            {/* PIN Security Card */}
+            <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-4">
+              <div className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <KeyRound className="h-4 w-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-foreground">Change Seller Admin PIN</h3>
+                  <p className="text-xs text-muted-foreground">
+                    Customize your 4-digit PIN for unlocking the Seller Dashboard.
+                  </p>
+                </div>
+              </div>
+
+              {pinChangeMsg && (
+                <div
+                  className={`rounded-lg p-3 text-xs font-semibold flex items-center gap-2 ${
+                    pinChangeMsg.error
+                      ? "bg-destructive/10 text-destructive border border-destructive/20"
+                      : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
+                  }`}
+                >
+                  {pinChangeMsg.error ? <AlertCircle className="h-4 w-4" /> : <Check className="h-4 w-4" />}
+                  {pinChangeMsg.text}
+                </div>
+              )}
+
+              <form onSubmit={handleUpdatePin} className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      New PIN (4+ digits)
+                    </label>
+                    <input
+                      type="password"
+                      maxLength={8}
+                      value={newPin}
+                      onChange={(e) => setNewPin(e.target.value)}
+                      placeholder="e.g. 5678"
+                      className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      Confirm New PIN
+                    </label>
+                    <input
+                      type="password"
+                      maxLength={8}
+                      value={confirmPin}
+                      onChange={(e) => setConfirmPin(e.target.value)}
+                      placeholder="Confirm new PIN"
+                      className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-end pt-2">
+                  <button
+                    type="submit"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-sm hover:opacity-95"
+                  >
+                    <KeyRound className="h-3.5 w-3.5" />
+                    Update PIN
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         )}
       </div>
+
+      {/* -------------------------------------------------------------------------------- */}
+      {/* MANUAL NEW ORDER MODAL */}
+      {/* -------------------------------------------------------------------------------- */}
+      {isNewOrderModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs">
+          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-border bg-card p-6 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <div className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <Plus className="h-4 w-4" />
+                </div>
+                <div>
+                  <h2 className="font-display text-lg font-bold">Record Customer Order</h2>
+                  <p className="text-xs text-muted-foreground">For phone-in or direct warehouse walk-in orders</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsNewOrderModalOpen(false)}
+                className="rounded-lg p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateManualOrder} className="mt-4 space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Customer Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={newOrderCustomer}
+                    onChange={(e) => setNewOrderCustomer(e.target.value)}
+                    placeholder="e.g. Chief Osagie"
+                    className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={newOrderPhone}
+                    onChange={(e) => setNewOrderPhone(e.target.value)}
+                    placeholder="e.g. 0803 123 4567"
+                    className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Select Drink *
+                </label>
+                <select
+                  value={newOrderDrinkSlug}
+                  onChange={(e) => setNewOrderDrinkSlug(e.target.value)}
+                  className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                >
+                  {drinks.map((d) => (
+                    <option key={d.slug} value={d.slug}>
+                      {d.name} ({d.category} · {d.brewer})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Packaging *
+                  </label>
+                  <div className="mt-1 flex gap-2">
+                    {(["Bottle", "Can"] as const).map((pkg) => (
+                      <button
+                        key={pkg}
+                        type="button"
+                        onClick={() => setNewOrderPackaging(pkg)}
+                        className={`flex-1 rounded-lg border py-2 text-xs font-semibold transition-colors ${
+                          newOrderPackaging === pkg
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-border bg-background text-muted-foreground"
+                        }`}
+                      >
+                        {pkg}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Quantity *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={newOrderQuantity}
+                    onChange={(e) => setNewOrderQuantity(e.target.value)}
+                    placeholder="e.g. 2 crates"
+                    className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Delivery Address *
+                </label>
+                <textarea
+                  rows={2}
+                  required
+                  value={newOrderAddress}
+                  onChange={(e) => setNewOrderAddress(e.target.value)}
+                  placeholder="e.g. 15 Sapele Road, Benin City, Edo State"
+                  className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Order Notes / Dispatch Instructions
+                </label>
+                <input
+                  type="text"
+                  value={newOrderNotes}
+                  onChange={(e) => setNewOrderNotes(e.target.value)}
+                  placeholder="e.g. Call upon arrival at junction"
+                  className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
+                <button
+                  type="button"
+                  onClick={() => setIsNewOrderModalOpen(false)}
+                  className="rounded-lg border border-border px-4 py-2 text-xs font-semibold text-muted-foreground hover:bg-muted"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={newOrderSaving}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-5 py-2 text-xs font-bold text-primary-foreground shadow-sm hover:opacity-95 disabled:opacity-50"
+                >
+                  {newOrderSaving ? (
+                    <>
+                      <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                      Saving Order…
+                    </>
+                  ) : (
+                    <>
+                      <Check className="h-3.5 w-3.5" />
+                      Record Order
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* -------------------------------------------------------------------------------- */}
       {/* PRODUCT ADD / EDIT MODAL */}

@@ -38,6 +38,10 @@ export const getOrders = async (): Promise<Order[]> => {
   return nestOrders.findAll();
 };
 
+export const createOrder = async (orderData: Partial<Order>): Promise<Order> => {
+  return nestOrders.create(orderData);
+};
+
 export const updateOrderStatus = async (
   id: string,
   status: Order["status"],

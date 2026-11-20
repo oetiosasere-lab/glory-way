@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Lock, ShieldCheck, ArrowRight } from "lucide-react";
 import heroImg from "@/assets/hero-drinks.jpg";
 import { drinks } from "@/lib/drinks";
 import { DrinkCard } from "@/components/drink-card";
@@ -48,7 +47,6 @@ function HomePage() {
       <Benefits />
       <Featured />
       <CtaBand />
-      <AdminGateway />
     </div>
   );
 }
@@ -69,7 +67,7 @@ function Hero() {
             beers, malts and soft drinks — delivering them safely to your door at
             honest prices during our 11-hour daily window.
           </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <Link
               to="/contact"
               className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5"
@@ -81,13 +79,6 @@ function Hero() {
               className="inline-flex items-center gap-2 rounded-md border border-primary/40 px-5 py-3 text-sm font-semibold text-primary hover:bg-primary/10"
             >
               View drinks
-            </Link>
-            <Link
-              to="/admin"
-              className="inline-flex items-center gap-2 rounded-md border border-primary/30 bg-primary/10 px-4 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/20 transition-colors"
-            >
-              <Lock className="h-4 w-4 text-primary" />
-              Admin Dashboard
             </Link>
           </div>
           <dl className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-primary/20 pt-6 text-sm">
@@ -205,41 +196,6 @@ function CtaBand() {
             Contact us · 0705 165 6621
           </a>
         </div>
-      </div>
-    </section>
-  );
-}
-
-function AdminGateway() {
-  return (
-    <section className="border-t border-border/70 bg-card py-10">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 sm:flex-row sm:px-6">
-        <div className="flex items-center gap-4 text-center sm:text-left">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary border border-primary/20">
-            <ShieldCheck className="h-6 w-6" />
-          </div>
-          <div>
-            <div className="flex items-center justify-center sm:justify-start gap-2">
-              <h3 className="font-display text-lg font-semibold text-foreground">
-                Seller Admin Dashboard
-              </h3>
-              <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
-                NestJS + Supabase
-              </span>
-            </div>
-            <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
-              Direct access for store management: track orders, manage products, and view enquiries.
-            </p>
-          </div>
-        </div>
-        <Link
-          to="/admin"
-          className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5"
-        >
-          <Lock className="h-4 w-4" />
-          Access Admin Dashboard
-          <ArrowRight className="h-4 w-4" />
-        </Link>
       </div>
     </section>
   );

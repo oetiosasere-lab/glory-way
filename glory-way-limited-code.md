@@ -765,8 +765,8 @@ function ContactPage() {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:gloryomosigho@gmail.com" className="hover:text-primary">
-                    gloryomosigho@gmail.com
+                  <a href="mailto:Oetiosasere@gmail.com" className="hover:text-primary">
+                    Oetiosasere@gmail.com
                   </a>
                 </li>
                 <li>
@@ -1561,7 +1561,7 @@ const info = {
   description:
     "Licensed sub-distributor of Nigerian Breweries drinks, delivering by the crate to homes and events in Benin City and across Edo State.",
   phone: "0705 165 6621",
-  email: "gloryomosigho@gmail.com",
+  email: "Oetiosasere@gmail.com",
   address:
     "Imasabor Number 19 Oduware, along Saple Road, NNPC Junction, Ikpoba Okha, Benin City, Edo State, Nigeria",
   hours: "Open 11 hours a day, 6 days a week, 365 days a year",

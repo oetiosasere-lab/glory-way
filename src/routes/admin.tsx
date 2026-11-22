@@ -906,7 +906,7 @@ function AdminPage() {
                     required
                     value={authEmail}
                     onChange={(e) => setAuthEmail(e.target.value)}
-                    placeholder="admin@gloryway.ng"
+                    placeholder="Oetiosasere@gmail.com"
                     autoFocus
                     className="w-full rounded-lg border border-input bg-background pl-10 pr-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                   />
@@ -1063,7 +1063,7 @@ function AdminPage() {
                   required
                   value={authEmail}
                   onChange={(e) => setAuthEmail(e.target.value)}
-                  placeholder="admin@gloryway.ng"
+                  placeholder="Oetiosasere@gmail.com"
                   className="mt-1 w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
               </div>
@@ -1144,7 +1144,7 @@ function AdminPage() {
                   required
                   value={authEmail}
                   onChange={(e) => setAuthEmail(e.target.value)}
-                  placeholder="admin@gloryway.ng"
+                  placeholder="Oetiosasere@gmail.com"
                   className="mt-1 w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
               </div>
@@ -2107,7 +2107,7 @@ function AdminPage() {
                   type="email"
                   value={siteSettings.email}
                   onChange={(e) => setSiteSettings({ ...siteSettings, email: e.target.value })}
-                  placeholder="e.g. gloryomosigho@gmail.com"
+                  placeholder="e.g. Oetiosasere@gmail.com"
                   className="mt-1 w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                   required
                 />

@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS public.site_settings (
 INSERT INTO public.site_settings (key, value)
 VALUES
     ('phone', '0705 165 6621'),
-    ('email', 'gloryomosigho@gmail.com'),
+    ('email', 'Oetiosasere@gmail.com'),
     ('address', 'Imasabor Number 19 along ologbo , Saple Road, Junction, ossiomo Industrial park junction by ikpoba Okha, Edo State, Nigeria'),
     ('operating_hours', 'Open 11 hours a day, 6 days a week, 365 days a year'),
     ('announcement', 'Chilled drinks ready for bulk delivery across Benin City. Order today!')

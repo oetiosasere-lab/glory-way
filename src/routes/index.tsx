@@ -27,10 +27,6 @@ export const Route = createFileRoute("/")({
 
 const benefits = [
   {
-    title: "Reliable hours",
-    body: "Open 11 hours a day, 6 days a week, 365 days a year. We're here when you need us most.",
-  },
-  {
     title: "Trusted by adults",
     body: "Sealed bottles, checked drivers, and strict 18+ verification on every delivery.",
   },
@@ -65,7 +61,7 @@ function Hero() {
           <p className="mt-5 max-w-lg text-base text-secondary-foreground/85 sm:text-lg">
             Glory Way Limited is a licensed sub-distributor of Nigerian Breweries
             beers, malts and soft drinks — delivering them safely to your door at
-            honest prices during our 11-hour daily window.
+            honest prices.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -81,14 +77,10 @@ function Hero() {
               View drinks
             </Link>
           </div>
-          <dl className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-primary/20 pt-6 text-sm">
+          <dl className="mt-10 grid max-w-xs grid-cols-2 gap-4 border-t border-primary/20 pt-6 text-sm">
             <div>
               <dt className="text-secondary-foreground/70">Years serving</dt>
               <dd className="mt-1 font-display text-2xl font-semibold text-primary">12+</dd>
-            </div>
-            <div>
-              <dt className="text-secondary-foreground/70">Open daily</dt>
-              <dd className="mt-1 font-display text-2xl font-semibold text-primary">11 hours</dd>
             </div>
             <div>
               <dt className="text-secondary-foreground/70">Brands stocked</dt>
@@ -115,10 +107,10 @@ function Benefits() {
   return (
     <Section
       eyebrow="Why adults choose Glory"
-      title="Three promises we keep on every order"
-      description="We built Glory Way Limited around what adults actually need from a drinks supplier: reliability, safety, and prices that don't sting."
+      title="Promises we keep on every order"
+      description="We built Glory Way Limited around what adults actually need from a drinks supplier: safety, quality, and prices that don't sting."
     >
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2">
         {benefits.map((b) => {
           return (
             <div
